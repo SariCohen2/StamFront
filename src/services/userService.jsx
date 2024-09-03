@@ -1,5 +1,8 @@
 // services/userService.js
+//web:
 const API_URL = 'http://10.217.59.99:5000';
+//local
+// const API_URL = 'http://192.168.1.100:5000';
 
 // Fetch all users
 export async function getUsers() {

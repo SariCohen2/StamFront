@@ -1,5 +1,9 @@
 // src/services/productService.js
+//web
 const API_URL = 'http://10.217.59.99:5000/api/products';
+//local
+// const API_URL = 'http://192.168.1.100:5000/api/products';
+
 
 export async function fetchProducts() {
   try {
