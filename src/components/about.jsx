@@ -4,7 +4,7 @@ import { styled, keyframes } from '@mui/system';
 import backgroundImage from '../assets/backgroundImage.jpg'; // תמונת רקע מרשימה
 import avatar from '../assets/avatar3.png'
 const goToList=()=>{
-    window.location.href="/list";
+    window.location.href="/StamFront/list";
 
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { HashRouter, Routes, Route, Link } from 'react-router-dom';
 import { AppBar, Toolbar, IconButton, Typography, Button, Divider, Box, Tooltip, Avatar, Dialog, DialogTitle, DialogContent, IconButton as DialogIconButton } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import ListAltIcon from '@mui/icons-material/ListAlt';
@@ -16,7 +16,7 @@ import AdminLogin from './adminLogin';
 import About from './about';
 import CartComponent from './BuyingProducts/cart';
 import ProductDetail from './BuyingProducts/productDetails';
-import GoogleLoginButton from './Login'
+import GoogleLoginButton from './Login';
 import PrivateRoute from './privateRoute';
 import UserList from './userList';
 import { styled } from '@mui/material/styles';
@@ -77,7 +77,7 @@ const AppRoutes = () => {
     };
 
     return (
-        <BrowserRouter basename='StamFront'>
+        <HashRouter>
             <StyledAppBar position="static">
                 <StyledToolbar>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -145,7 +145,6 @@ const AppRoutes = () => {
                 </Toolbar>
             </StyledAppBar>
             <Routes>
-                <Route path='/StamFront' element={<Home />} />
                 <Route path='/' element={<Home />} />
                 <Route path='/home' element={<Home />} />
                 <Route path='/list' element={<ProductList />} />
@@ -181,7 +180,7 @@ const AppRoutes = () => {
                 </Dialog>
             )}
             <Footer />
-        </BrowserRouter>
+        </HashRouter>
     );
 };
 
