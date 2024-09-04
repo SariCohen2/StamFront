@@ -73,7 +73,7 @@ export default function Footer() {
             </Grid>
             <Divider sx={{ backgroundColor: '#795548', margin: '20px 0' }} />
             <Typography variant="body2" sx={{ textAlign: 'center', fontFamily: 'David Libre' }}>
-                © {new Date().getFullYear()} סופר סת"ם - כל הזכויות שמורות.
+                © {new Date().getFullYear()} שרי בניית אתרים - כל הזכויות שמורות.
             </Typography>
             <Box sx={{ textAlign: 'center', marginTop: 2 }}>
                 <Button
