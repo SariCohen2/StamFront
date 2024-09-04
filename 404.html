@@ -6,14 +6,11 @@
   <title>Page Not Found</title>
   <script type="text/javascript">
     (function() {
-      // Base path of your GitHub Pages site
-      const basePath = '/StamFront';
-
       // Get the full path after the base path
       const fullPath = window.location.pathname + window.location.search + window.location.hash;
 
-      // Redirect to the correct route in your React app
-      window.location.replace(basePath + '/#' + fullPath);
+      // Redirect to the correct route in your React app by just adding the hash part
+      window.location.replace('/StamFront/#' + fullPath.replace('/StamFront', ''));
     })();
   </script>
 </head>
