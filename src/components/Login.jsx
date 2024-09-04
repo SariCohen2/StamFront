@@ -30,7 +30,7 @@ const GoogleLoginButton = () => {
   };
 
   return (
-    <GoogleLogin width={"50px"}
+    <GoogleLogin width={"50px"} shape='circle'
       onSuccess={handleSuccess}
       onError={handleError}
     />

@@ -1,7 +1,8 @@
 // src/services/productService.js
 // const API_URL = 'http://10.217.59.99:5000/api/products';
-const API_URL = 'https://KobiStam.onrender.com/api/products';
-
+// const API_URL = 'https://KobiStam.onrender.com/api/products';
+//local
+const API_URL='http://127.0.0.1:5000/api/products';
 
 export async function fetchProducts() {
   try {

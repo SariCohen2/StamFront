@@ -14,6 +14,8 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.2",
     "chart.js": "^4.4.3",
+    "date-fns": "^3.6.0",
+    "file-saver": "^2.0.5",
     "gh-pages": "^6.1.1",
     "react": "^18.3.1",
     "react-beautiful-dnd": "^13.1.1",
@@ -26,9 +28,10 @@
     "react-slick": "^0.30.2",
     "slick-carousel": "^1.8.1",
     "sweetalert2": "^11.12.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "xlsx": "^0.18.5"
   },
-  "homepage": "https://SariCohen2.github.io/StamFront",
+  "homepage": "https://SariCohen2.github.io/StamFront/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

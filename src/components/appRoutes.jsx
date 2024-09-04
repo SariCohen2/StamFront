@@ -1,10 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import { AppBar, Toolbar, IconButton, Typography, Button, Divider, Box, Tooltip, Avatar } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Typography, Button, Divider, Box, Tooltip, Avatar, Dialog, DialogTitle, DialogContent, IconButton as DialogIconButton } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
-import ListIcon from '@mui/icons-material/List';
-import InfoIcon from '@mui/icons-material/Info';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle'; // אייקון לוגין
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import GoogleIcon from '@mui/icons-material/Google';
 import Home from './home';
 import ProductList from './productList/productList';
 import AddProduct from './ProductHandling/addProduct';
@@ -14,119 +16,163 @@ import AdminLogin from './adminLogin';
 import About from './about';
 import CartComponent from './BuyingProducts/cart';
 import ProductDetail from './BuyingProducts/productDetails';
-import GoogleLoginButton from './Login'; // קומפוננטת לוגין
+import GoogleLoginButton from './Login'
 import PrivateRoute from './privateRoute';
 import UserList from './userList';
+import { styled } from '@mui/material/styles';
+import CloseIcon from '@mui/icons-material/Close';
 
-export default function AppRoutes() {
-    // קבלת פרטי המשתמש מהלוקל-סטורג'
-    const name = sessionStorage.getItem('name');
-    const picture = sessionStorage.getItem('picture');
-    
-    return (
-        <BrowserRouter>
-            <AppBar position="static" sx={{ backgroundColor: '#3e2723', color: '#ffffff' }}>
-                <Toolbar>
-                    <IconButton edge="start" color="inherit" aria-label="home" component={Link} to="/">
-                        <HomeIcon sx={{ fontSize: 30 }} />
-                    </IconButton>
-                    <Typography variant="h5" component="div" sx={{ flexGrow: 1, fontFamily: 'David Libre', fontWeight: 'bold' }}>
-                        סופר סת"ם
-                    </Typography>
-                    <Tooltip title={name ? `שלום, ${name}` : "הכנס עם שם משתמש"}>
-                        <IconButton color="inherit">
-                            <GoogleLoginButton></GoogleLoginButton>
-                            {picture ? <Avatar src={picture} /> : <AccountCircleIcon />}
-                        </IconButton>
-                    </Tooltip>
-                </Toolbar>
-                <Divider sx={{ backgroundColor: '#795548' }} />
-                <Toolbar>
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center', width: '100%' }}>
-                        <Button 
-                            variant="contained" 
-                            color="secondary" 
-                            startIcon={<ListIcon />} 
-                            component={Link} to="/list" 
-                            sx={{ 
-                                backgroundColor: '#5d4037', 
-                                '&:hover': { 
-                                    backgroundColor: '#4e342e' 
-                                }, 
-                                borderRadius: '20px', 
-                                boxShadow: '0px 4px 10px rgba(0,0,0,0.3)' 
-                            }}
-                        >
-                            רשימת מוצרים
-                        </Button>
-                        <Button 
-                            variant="contained" 
-                            color="secondary" 
-                            startIcon={<InfoIcon />} 
-                            component={Link} to="/about" 
-                            sx={{ 
-                                backgroundColor: '#5d4037', 
-                                '&:hover': { 
-                                    backgroundColor: '#4e342e' 
-                                }, 
-                                borderRadius: '20px', 
-                                boxShadow: '0px 4px 10px rgba(0,0,0,0.3)' 
-                            }}
-                        >
-                            אודות
-                        </Button>
-                        <Button 
-                            variant="contained" 
-                            color="secondary" 
-                            startIcon={<InfoIcon />} 
-                            component={Link} to="/cart" 
-                            sx={{ 
-                                backgroundColor: '#5d4037', 
-                                '&:hover': { 
-                                    backgroundColor: '#4e342e' 
-                                }, 
-                                borderRadius: '20px', 
-                                boxShadow: '0px 4px 10px rgba(0,0,0,0.3)' 
-                            }}
-                        >
-                            סל קניות
-                        </Button>
-                        <Button 
-                            variant="contained" 
-                            color="secondary" 
-                            startIcon={<InfoIcon />} 
-                            component={Link} to="/user-list" 
-                            sx={{ 
-                                backgroundColor: '#5d4037', 
-                                '&:hover': { 
-                                    backgroundColor: '#4e342e' 
-                                }, 
-                                borderRadius: '20px', 
-                                boxShadow: '0px 4px 10px rgba(0,0,0,0.3)' 
-                            }}
-                        >
-                            רשימת לידים חמים❤️‍🔥
-                        </Button>
-                    </Box>
-                </Toolbar>
-            </AppBar>
-            <Routes>
-                <Route path='/' element={<Home />}></Route>
-                <Route path='/home' element={<Home />}></Route>
-                <Route path='/list' element={<ProductList />}></Route>
-                <Route path="/google-login" element={<GoogleLoginButton />} />
-                <Route path="/admin-login" element={<AdminLogin />} />
-                <Route path='/about' element={<About/>}></Route>
-                <Route path='/cart' element={<CartComponent/>}></Route>
-                <Route path="/product/:productId" element={<ProductDetail />} />
-                
-                {/* Protected Routes */}
-                <Route path="/add-product" element={<PrivateRoute element={<AddProduct />} />} />
-                <Route path="/edit-product/:id" element={<PrivateRoute element={<EditProduct />} />} />
-                <Route path="/user-list" element={<PrivateRoute element={<UserList />} />} />
+// Styled components
+const StyledAppBar = styled(AppBar)(({ theme }) => ({
+  backgroundColor: '#3e2723',
+  color: '#ffffff',
+}));
 
-            </Routes>
-            <Footer/>
-        </BrowserRouter>
-    );
-}
+const StyledToolbar = styled(Toolbar)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  flexDirection: 'column',
+  [theme.breakpoints.up('sm')]: {
+    flexDirection: 'row',
+  },
+}));
+
+const LogoTypography = styled(Typography)(({ theme }) => ({
+  flexGrow: 1,
+  fontFamily: 'David Libre',
+  fontWeight: 'bold',
+  fontSize: '1.5rem',
+  textAlign: 'center',
+  [theme.breakpoints.up('sm')]: {
+    fontSize: '1.8rem',
+    textAlign: 'left',
+  },
+}));
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  backgroundColor: '#5d4037',
+  color: '#ffffff',
+  borderRadius: '20px',
+  boxShadow: '0px 6px 12px rgba(0,0,0,0.3)',
+  '&:hover': {
+    backgroundColor: '#4e342e',
+  },
+  padding: theme.spacing(1, 2),
+  margin: theme.spacing(0.5),
+  [theme.breakpoints.down('sm')]: {
+    fontSize: '0.9rem',
+    padding: theme.spacing(0.5, 1),
+  },
+}));
+
+const AppRoutes = () => {
+  const [showLoginDialog, setShowLoginDialog] = React.useState(false);
+  const name = sessionStorage.getItem('name');
+  const picture = sessionStorage.getItem('picture');
+  const isAdmin = sessionStorage.getItem('role') === 'true';
+
+  const handleToggleDialog = () => {
+    setShowLoginDialog(prev => !prev);
+  };
+
+  return (
+    <BrowserRouter>
+      <StyledAppBar position="static">
+        <StyledToolbar>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <IconButton edge="start" color="inherit" aria-label="home" component={Link} to="/">
+              <HomeIcon sx={{ fontSize: 35 }} />
+            </IconButton>
+            <LogoTypography variant="h5" component="div">
+              סופר סת"ם
+            </LogoTypography>
+          </Box>
+          <Tooltip title={name ? `שלום, ${name}` : "היכנס באמצעות גוגל"}>
+            <IconButton
+              color="inherit"
+              onClick={handleToggleDialog}
+            >
+              {picture ? (
+                <Avatar src={picture} />
+              ) : (
+                <GoogleIcon sx={{ fontSize: 35, color: '#4285F4' }} />
+              )}
+            </IconButton>
+          </Tooltip>
+        </StyledToolbar>
+        <Divider sx={{ backgroundColor: '#795548' }} />
+        <Toolbar>
+          <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'center', width: '100%' }}>
+            <StyledButton
+              variant="contained"
+              startIcon={<ListAltIcon />}
+              component={Link} to="/list"
+            >
+              רשימת מוצרים
+            </StyledButton>
+            <StyledButton
+              variant="contained"
+              startIcon={<InfoOutlinedIcon />}
+              component={Link} to="/about"
+            >
+              אודות
+            </StyledButton>
+            <StyledButton
+              variant="contained"
+              startIcon={<ShoppingCartOutlinedIcon />}
+              component={Link} to="/cart"
+            >
+              סל קניות
+            </StyledButton>
+            {isAdmin && (
+              <StyledButton
+                variant="contained"
+                startIcon={<AdminPanelSettingsIcon />}
+                component={Link} to="/user-list"
+              >
+                רשימת לידים חמים🔥
+              </StyledButton>
+            )}
+          </Box>
+        </Toolbar>
+      </StyledAppBar>
+      <Routes>
+        <Route path='/StamFront' element={<Home />} />
+        <Route path='/' element={<Home />} />
+        <Route path='/home' element={<Home />} />
+        <Route path='/list' element={<ProductList />} />
+        <Route path="/google-login" element={<GoogleLoginButton />} />
+        <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/cart' element={<CartComponent />} />
+        <Route path="/product/:productId" element={<ProductDetail />} />
+        {/* Protected Routes */}
+        <Route path="/add-product" element={<PrivateRoute element={<AddProduct />} />} />
+        <Route path="/edit-product/:id" element={<PrivateRoute element={<EditProduct />} />} />
+        <Route path="/user-list" element={<PrivateRoute element={<UserList />} />} />
+      </Routes>
+      {showLoginDialog && (
+        <Dialog open onClose={handleToggleDialog} maxWidth="xs" fullWidth dir='rtl'>
+          <DialogTitle>
+            <DialogIconButton
+              edge="end"
+              color="inherit"
+              onClick={handleToggleDialog}
+              aria-label="close"
+              sx={{ position: 'absolute', right: 8, top: 8 }}
+            >
+              <CloseIcon />
+            </DialogIconButton>
+            הכנס באמצעות גוגל
+          </DialogTitle>
+          <DialogContent>
+            <GoogleLoginButton onClose={handleToggleDialog} />
+          </DialogContent>
+        </Dialog>
+      )}
+      <Footer />
+    </BrowserRouter>
+  );
+};
+
+export default AppRoutes;
