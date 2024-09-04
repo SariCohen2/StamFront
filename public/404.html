@@ -1,22 +1,23 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <script type="text/javascript">
-      // Get the current path
-      const pathname = window.location.pathname;
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found</title>
+  <script type="text/javascript">
+    (function() {
+      // Base path of your GitHub Pages site
+      const basePath = '/StamFront';
 
-      // Extract the relevant part of the path (excluding the base path '/StamFront/')
-      const basePath = '/StamFront/';
-      const newPath = pathname.startsWith(basePath)
-        ? pathname.substring(basePath.length)
-        : pathname;
+      // Get the full path after the base path
+      const fullPath = window.location.pathname + window.location.search + window.location.hash;
 
-      // Redirect to the correct path in your React app
-      window.location.replace(basePath  + newPath);
-    </script>
-  </head>
-  <body>
-    <p>If you are not redirected automatically, <a id="redirectLink" href="/">click here</a>.</p>
-  </body>
+      // Redirect to the correct route in your React app
+      window.location.replace(basePath + '/#' + fullPath);
+    })();
+  </script>
+</head>
+<body>
+  <p>If you are not redirected automatically, <a href="/">click here</a>.</p>
+</body>
 </html>
