@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta http-equiv="refresh" content="0; URL=/" />
-  <script>
-    // Redirect to the root URL so that React Router can handle the routing
-    window.location.replace("/");
-  </script>
-</head>
-<body>
-  <p>If you are not redirected automatically, <a href="/">click here</a>.</p>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <script type="text/javascript">
+      // Get the current path
+      const pathname = window.location.pathname;
+
+      // Extract the relevant part of the path (excluding the base path '/StamFront/')
+      const basePath = '/StamFront/';
+      const newPath = pathname.startsWith(basePath)
+        ? pathname.substring(basePath.length)
+        : pathname;
+
+      // Redirect to the correct path in your React app
+      window.location.replace(basePath + '#' + newPath);
+    </script>
+  </head>
+  <body>
+    <p>If you are not redirected automatically, <a id="redirectLink" href="/">click here</a>.</p>
+  </body>
 </html>
