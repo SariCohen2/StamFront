@@ -28,13 +28,12 @@
     "sweetalert2": "^11.12.4",
     "web-vitals": "^2.1.4"
   },
-  "homepage": "https://SariCohen2.github.io/repository-name",
+  "homepage": "https://SariCohen2.github.io",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "homepage": "https://SariCohen2.github.io/StamFront",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
