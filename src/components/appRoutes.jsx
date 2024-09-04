@@ -76,7 +76,7 @@ const AppRoutes = () => {
   };
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename='StamFront'>
       <StyledAppBar position="static">
         <StyledToolbar>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
