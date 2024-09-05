@@ -16,7 +16,7 @@ const ProductList = () => {
     useEffect(() => {
         const loadProducts = async () => {
             try {
-                const data = await fetchProducts();
+                const data = await fetchProducts(); // לא צריך להעביר false כאן
                 setProducts(data);
                 setFilteredProducts(data);
             } catch (error) {
@@ -50,6 +50,7 @@ const ProductList = () => {
     const handleDelete = async (id) => {
         try {
             await deleteProduct(id);
+            // עדכון המערך המקומי
             setProducts(products.filter(product => product.Id !== id));
             setFilteredProducts(filteredProducts.filter(product => product.Id !== id));
         } catch (error) {

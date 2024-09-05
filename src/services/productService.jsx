@@ -3,44 +3,63 @@
 const API_URL = 'https://kobistam.onrender.com/api/products';
 //local
 // const API_URL='http://127.0.0.1:5000/api/products';
+let products;
 
 export async function fetchProducts() {
+  if(!products){
   try {
     const response = await fetch(API_URL);
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
     const data = await response.json();
-    console.log("data========",data);
-    
+    products = data;
+    // console.log("data========",data);
+    return data;
+  } catch (error) {
+    console.error('There has been a problem with your fetch operation:', error);
+    throw error;
+  }
+}  
+}
+export async function fetchProduct(id) {
+  // בדוק אם המערך המקומי קיים ואם המוצר המבוקש נמצא בו
+  if (products) {
+    const product = products.find((product) => product.id === id);
+    if (product) {
+      return product; // החזר את המוצר אם הוא קיים במערך המקומי
+    }
+  }
+
+  // אם המוצר לא נמצא במערך המקומי או אם המערך לא קיים, בצע קריאה לשרת
+  try {
+    const response = await fetch(`${API_URL}/${id}`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+
+    // אם הצלחנו להביא את המוצר מהשרת, נוסיף אותו למערך המקומי
+    if (products) {
+      products.push(data);
+    } else {
+      products = [data];
+    }
+
     return data;
   } catch (error) {
     console.error('There has been a problem with your fetch operation:', error);
     throw error;
   }
 }
-export async function fetchProduct(id) {
-    try {
-      const response = await fetch(`${API_URL}/${id}`);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
-      console.log("data========",data);
-      
-      return data;
-    } catch (error) {
-      console.error('There has been a problem with your fetch operation:', error);
-      throw error;
-    }
-  }
+
 
   export const addProduct = async (product) => {
     console.log(JSON.stringify(product));
     product.Id="0";
     // product.Image="xx";
     try {
-      const response = await fetch('http://localhost:5000/api/products', {
+      const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json', // וודא שאתה שולח את הכותרת הנכונה
@@ -54,7 +73,7 @@ export async function fetchProduct(id) {
         console.error('Error details:', errorDetails);
         throw new Error('Failed to add product');
       }
-  
+      product=[...products,response.body]
       return await response.json();
     } catch (error) {
       console.error('Error adding product:', error);

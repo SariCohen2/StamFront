@@ -12,7 +12,7 @@ const StyledCard = styled(Card)(({ theme }) => ({
   margin: theme.spacing(2),
   borderRadius: '10px',
   transition: 'transform 0.3s ease',
-  cursor: 'pointer', // Add cursor pointer to indicate it's clickable
+  cursor: 'pointer',
   '&:hover': {
     transform: 'scale(1.05)',
   },
@@ -48,8 +48,8 @@ const ProductItem = ({ product, onDelete }) => {
         });
 
         if (result.isConfirmed) {
-          await deleteProduct(product.Id);
-          onDelete(product.Id);
+          await deleteProduct(product.Id); // מחיקת מוצר מהשרת
+          onDelete(product.Id); // עדכון המערך המקומי
           Swal.fire('נמחק!', 'המוצר נמחק בהצלחה.', 'success');
         }
       } catch (error) {
