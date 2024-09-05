@@ -29,31 +29,33 @@ export async function fetchProduct(id) {
   // בדוק אם המערך המקומי קיים ואם המוצר המבוקש נמצא בו
   if (products) {
     const product = products.find((product) => product.id === id);
+    console.log('The product found');
+    
     if (product) {
       return product; // החזר את המוצר אם הוא קיים במערך המקומי
     }
   }
 
   // אם המוצר לא נמצא במערך המקומי או אם המערך לא קיים, בצע קריאה לשרת
-  // try {
-  //   const response = await fetch(`${API_URL}/${id}`);
-  //   if (!response.ok) {
-  //     throw new Error('Network response was not ok');
-  //   }
-  //   const data = await response.json();
+  try {
+    const response = await fetch(`${API_URL}/${id}`);
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
 
-  //   // אם הצלחנו להביא את המוצר מהשרת, נוסיף אותו למערך המקומי
-  //   if (products) {
-  //     products.push(data);
-  //   } else {
-  //     products = [data];
-  //   }
+    // אם הצלחנו להביא את המוצר מהשרת, נוסיף אותו למערך המקומי
+    // if (products) {
+    //   products.push(data);
+    // } else {
+    //   products = [data];
+    // }
 
-  //   return data;
-  // } catch (error) {
-  //   console.error('There has been a problem with your fetch operation:', error);
-  //   throw error;
-  // }
+    return data;
+  } catch (error) {
+    console.error('There has been a problem with your fetch operation:', error);
+    throw error;
+  }
 }
 export const addProduct = async (product) => {
   console.log(JSON.stringify(product));

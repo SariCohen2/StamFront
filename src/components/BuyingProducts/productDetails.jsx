@@ -80,7 +80,12 @@ const ProductDetail = () => {
 
   useEffect(() => {
     const fetchTheProduct = async () => {
+      console.log('in  fetchTheProduct');
+
+      
       const fetchedProduct = await fetchProduct(productId);
+      console.log('after feche the product');
+      
       setProduct(fetchedProduct);
 
       // בדיקת האם המוצר כבר קיים בסל ואם כן, עדכון הכמות בהתאם
