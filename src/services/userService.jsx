@@ -1,6 +1,6 @@
 // services/userService.js
 // const API_URL = 'http://10.217.59.99:5000';
-const API_URL='https://kobistam.onrender.com';
+const API_URL = 'https://kobistam.onrender.com';
 // const API_URL='http://127.0.0.1:5000';
 
 // Fetch all users
@@ -62,6 +62,8 @@ export async function updateUser(name, email, image) {
 
 // Check admin credentials
 export async function adminCheck(name, password) {
+  console.log('in check admi n username, passord=',name,password);
+  
   try {
     const response = await fetch(`${API_URL}/api/admin`, {
       method: 'POST',
@@ -71,6 +73,7 @@ export async function adminCheck(name, password) {
       body: JSON.stringify({ Name: name, Password: password }),
     });
     console.log(response);  // הוסף את זה כדי לראות את התגובה
+    console.log('response token=', response.token);
 
     if (!response.ok) {
       throw new Error('Network response was not ok');

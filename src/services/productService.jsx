@@ -76,6 +76,7 @@ export const addProduct = async (product) => {
       console.error('Error details:', errorDetails);
       throw new Error('Failed to add product');
     }
+    console.log('added successfully');
     product = [...products, response.body]
     return await response.json();
   } catch (error) {
@@ -97,6 +98,7 @@ export const updateProduct = async (id, updatedProduct) => {
   if (!response.ok) {
     throw new Error('Failed to update product');
   }
+  console.log('updated successfully');
 
   const data = await response.json();
   return data;
@@ -109,5 +111,7 @@ export const deleteProduct = async (id) => {
   if (!response.ok) {
     throw new Error('Failed to delete product');
   }
+  console.log('deleted successfully');
+
   return true;
 };
