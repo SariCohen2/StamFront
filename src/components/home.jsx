@@ -98,7 +98,7 @@ export default function Home() {
             '&:hover': {
               backgroundColor: '#5d4037',
             }
-          }} href='StamFront/list'
+          }} href='list'
         >
           <ArrowForwardIcon sx={{ marginRight: 1 }} />
           ראה את המוצרים שלנו
@@ -171,7 +171,7 @@ export default function Home() {
             '&:hover': {
               backgroundColor: '#5d4037',
             } 
-          }} href='StamFront/list'
+          }} href='list'
         >
           <ArrowForwardIcon sx={{ marginRight: 1 }} />
           ראה את המוצרים שלנו
