@@ -70,6 +70,8 @@ export async function adminCheck(name, password) {
       },
       body: JSON.stringify({ Name: name, Password: password }),
     });
+    console.log(response);  // הוסף את זה כדי לראות את התגובה
+
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }

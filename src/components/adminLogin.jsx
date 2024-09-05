@@ -17,7 +17,8 @@ const AdminLogin = () => {
         try {
             // Call the adminCheck function with username and password
             const response = await adminCheck(username, password);
-            console.log("status=",response.status);
+            console.log("status=",response);
+
             
             // Check if response indicates success and contains a token
             if (response.status == 'success' && response.token) {
