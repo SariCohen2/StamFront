@@ -55,8 +55,6 @@ export async function fetchProduct(id) {
     throw error;
   }
 }
-
-
 export const addProduct = async (product) => {
   console.log(JSON.stringify(product));
   product.Id = "0";
@@ -76,9 +74,11 @@ export const addProduct = async (product) => {
       console.error('Error details:', errorDetails);
       throw new Error('Failed to add product');
     }
-    console.log('added successfully');
-    product = [...products, response.body]
-    return await response.json();
+    
+    const newProduct = await response.json();
+    products = [...products, newProduct]; // עדכון המערך בצורה נכונה
+    return newProduct;
+    
   } catch (error) {
     console.error('Error adding product:', error);
     throw error;
