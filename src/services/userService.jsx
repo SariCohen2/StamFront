@@ -20,6 +20,7 @@ export async function getUsers() {
 
 // Add a new user
 export async function addUser(name, email, image) {
+  console.log('in add user name,email,image=',name,email,image);
   try {
     const response = await fetch(`${API_URL}/api/users`, {
       method: 'POST',
@@ -29,6 +30,8 @@ export async function addUser(name, email, image) {
       body: JSON.stringify({ Name: name, Email: email, Image: image }),
     });
     if (!response.ok) {
+      console.log('error response=',response);
+      
       throw new Error('Network response was not ok');
     }
     const data = await response.json();
