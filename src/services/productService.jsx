@@ -29,9 +29,8 @@ export async function fetchProduct(id) {
   // בדוק אם המערך המקומי קיים ואם המוצר המבוקש נמצא בו
   if (products) {
     const product = products.find((product) => product.id === id);
-    console.log('The product found');
-    
     if (product) {
+      console.log('product found in local');
       return product; // החזר את המוצר אם הוא קיים במערך המקומי
     }
   }
@@ -76,11 +75,9 @@ export const addProduct = async (product) => {
       console.error('Error details:', errorDetails);
       throw new Error('Failed to add product');
     }
-    
-    const newProduct = await response.json();
-    products = [...products, newProduct]; // עדכון המערך בצורה נכונה
-    return newProduct;
-    
+    console.log('added successfully');
+    product = [...products, response.body]
+    return await response.json();
   } catch (error) {
     console.error('Error adding product:', error);
     throw error;
