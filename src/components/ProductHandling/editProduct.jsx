@@ -1,8 +1,13 @@
+import React, { useEffect, useState } from 'react';
+import ProductForm from './productForm';
+import { useParams, useNavigate } from 'react-router-dom';
+import { fetchProduct, updateProduct } from '../../services/productService';
+import Swal from 'sweetalert2';
+
 const EditProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true); // מצב טעינה
 
   useEffect(() => {
     const loadProduct = async () => {
@@ -11,8 +16,6 @@ const EditProduct = () => {
         setProduct(productData);
       } catch (error) {
         console.error('Error loading product:', error);
-      } finally {
-        setLoading(false); // סיום מצב טעינה
       }
     };
 
@@ -33,20 +36,14 @@ const EditProduct = () => {
       console.error('Error updating product:', error);
       await Swal.fire({
         icon: 'error',
-        title: 'שגיאה!',
-        text: 'אירעה שגיאה בעדכון המוצר.',
+        title: 'שגיאה בעדכון מוצר',
+        text: 'לא ניתן לעדכן את המוצר.',
         confirmButtonText: 'אוקי'
       });
     }
   };
 
-  if (loading) {
-    return <div>טוען מוצר...</div>; // הודעת טעינה
-  }
-
-  return product ? (
-    <ProductForm product={product} onSave={handleSave} />
-  ) : (
-    <div>לא נמצא מוצר</div>
-  );
+  return product ? <ProductForm initialProduct={product} onSave={handleSave} /> : <p>Loading...</p>;
 };
+
+export default EditProduct;
