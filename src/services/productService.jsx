@@ -35,25 +35,25 @@ export async function fetchProduct(id) {
   }
 
   // אם המוצר לא נמצא במערך המקומי או אם המערך לא קיים, בצע קריאה לשרת
-  try {
-    const response = await fetch(`${API_URL}/${id}`);
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const data = await response.json();
+  // try {
+  //   const response = await fetch(`${API_URL}/${id}`);
+  //   if (!response.ok) {
+  //     throw new Error('Network response was not ok');
+  //   }
+  //   const data = await response.json();
 
-    // אם הצלחנו להביא את המוצר מהשרת, נוסיף אותו למערך המקומי
-    if (products) {
-      products.push(data);
-    } else {
-      products = [data];
-    }
+  //   // אם הצלחנו להביא את המוצר מהשרת, נוסיף אותו למערך המקומי
+  //   if (products) {
+  //     products.push(data);
+  //   } else {
+  //     products = [data];
+  //   }
 
-    return data;
-  } catch (error) {
-    console.error('There has been a problem with your fetch operation:', error);
-    throw error;
-  }
+  //   return data;
+  // } catch (error) {
+  //   console.error('There has been a problem with your fetch operation:', error);
+  //   throw error;
+  // }
 }
 export const addProduct = async (product) => {
   console.log(JSON.stringify(product));
