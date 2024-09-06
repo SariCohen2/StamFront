@@ -28,7 +28,7 @@ export async function fetchProducts() {
 export async function fetchProduct(id) {
   // בדוק אם המערך המקומי קיים ואם המוצר המבוקש נמצא בו
   if (products) {
-    const product = products.find((product) => product.id === id);
+    const product = products.find((product) => product.Id === id);
     if (product) {
       console.log('product found in local');
       return product; // החזר את המוצר אם הוא קיים במערך המקומי
