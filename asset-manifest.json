@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/StamFront/static/css/main.d7a3ac7c.css",
-    "main.js": "/StamFront/static/js/main.1db5e7f2.js",
+    "main.js": "/StamFront/static/js/main.2b284e1f.js",
     "static/js/453.6840d1af.chunk.js": "/StamFront/static/js/453.6840d1af.chunk.js",
     "static/media/backgroundImage.jpg": "/StamFront/static/media/backgroundImage.0fa61b4c9dade23ce06b.jpg",
     "static/media/slick.svg": "/StamFront/static/media/slick.2630a3e3eab21c607e21.svg",
@@ -10,11 +10,11 @@
     "static/media/slick.woff": "/StamFront/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/StamFront/index.html",
     "main.d7a3ac7c.css.map": "/StamFront/static/css/main.d7a3ac7c.css.map",
-    "main.1db5e7f2.js.map": "/StamFront/static/js/main.1db5e7f2.js.map",
+    "main.2b284e1f.js.map": "/StamFront/static/js/main.2b284e1f.js.map",
     "453.6840d1af.chunk.js.map": "/StamFront/static/js/453.6840d1af.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.d7a3ac7c.css",
-    "static/js/main.1db5e7f2.js"
+    "static/js/main.2b284e1f.js"
   ]
 }
