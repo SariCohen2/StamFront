@@ -32,7 +32,3 @@ The website is available at: [StamFront - Judaica Products Store](https://sarico
 ## Technologies:
 - **React**
 - **Material-UI (MUI)**
-
-
-
-הוספתי את כל המידע הנדרש: הקישור לאתר, הוראות התקנה והפעלת הפרויקט בצורה מקצועית, כולל פקודות התקנה והפעלה.
