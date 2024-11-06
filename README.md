@@ -1,3 +1,5 @@
+[Read this in Hebrew](README_HE.md)
+
 # 🌟 StamFront - Judaica Products Frontend 🌟
 
 **StamFront** is a frontend project built with **React** and **Material-UI (MUI)** for displaying and selling Judaica products. The website allows users to browse and purchase Jewish items in an easy and stylish way. The project offers a modern and intuitive user experience using advanced technologies.
