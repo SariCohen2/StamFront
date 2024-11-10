@@ -8,19 +8,24 @@ import Swal from 'sweetalert2';
 import { deleteProduct } from '../../services/productService';
 
 const StyledCard = styled(Card)(({ theme }) => ({
-  maxWidth: 400,
-  margin: theme.spacing(2),
-  borderRadius: '10px',
-  transition: 'transform 0.3s ease',
+  borderRadius: '12px',
+  transition: 'transform 0.3s ease, box-shadow 0.3s ease',
   cursor: 'pointer',
+  display: 'flex',
+  flexDirection: 'column',
+  height: '100%',
+  boxShadow: theme.shadows[4], // שיפור הצללה
   '&:hover': {
     transform: 'scale(1.05)',
+    boxShadow: theme.shadows[8], // צל חזק יותר בה-hover
   },
+  position: 'relative', // לאפשר תוויות מוצרים
 }));
 
 const StyledCardMedia = styled(CardMedia)(({ theme }) => ({
-  height: 250,
-  backgroundSize: 'contain',
+  height: 200,
+  backgroundSize: 'cover', // התמונה תתפרס על כל הכרטיס
+  backgroundPosition: 'center', // התמונה ממורכזת
 }));
 
 const ProductItem = ({ product, onDelete }) => {
@@ -28,36 +33,31 @@ const ProductItem = ({ product, onDelete }) => {
   const isAdmin = () => sessionStorage.getItem('role') === 'true';
 
   const handleEditClick = (event) => {
-    event.stopPropagation(); // Stop propagation to prevent triggering the card click
+    event.stopPropagation();
     navigate(`/edit-product/${product.Id}`);
   };
 
   const handleDeleteClick = (event) => {
-    event.stopPropagation(); // Stop propagation to prevent triggering the card click
-    const handleDelete = async () => {
-      try {
-        const result = await Swal.fire({
-          title: 'האם אתה בטוח?',
-          text: 'לא ניתן לשחזר את המוצר לאחר מחיקה!',
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: '!כן, מחק',
-          cancelButtonText: 'לא, בטל',
-        });
-
-        if (result.isConfirmed) {
-          await deleteProduct(product.Id); // מחיקת מוצר מהשרת
-          onDelete(product.Id); // עדכון המערך המקומי
-          Swal.fire('נמחק!', 'המוצר נמחק בהצלחה.', 'success');
+    event.stopPropagation();
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You won\'t be able to revert this!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await deleteProduct(product.Id);
+          onDelete(product.Id);
+          Swal.fire('Deleted!', 'Your product has been deleted.', 'success');
+        } catch (error) {
+          Swal.fire('Error!', 'There was a problem deleting the product.', 'error');
         }
-      } catch (error) {
-        console.error('Failed to delete product:', error);
-        Swal.fire('שגיאה!', 'הייתה שגיאה במחיקת המוצר.', 'error');
       }
-    };
-    handleDelete();
+    });
   };
 
   const handleCardClick = () => {
@@ -71,27 +71,59 @@ const ProductItem = ({ product, onDelete }) => {
         image={product.Image}
         alt={product.Name}
       />
-      <CardContent>
-        <Typography variant="h5" component="div">
+      {/* תווית "במבצע" */}
+      {product.OnSale && (
+        <Box sx={{
+          position: 'absolute', top: 10, left: 10,
+          backgroundColor: 'red', color: 'white',
+          padding: '5px 10px', borderRadius: '5px',
+        }}>
+          במבצע
+        </Box>
+      )}
+      <CardContent sx={{ padding: '20px', textAlign: 'center' }}>
+        <Typography variant="h5" component="div" sx={{ marginBottom: '10px', fontWeight: 'bold', fontSize: '1.25rem' }}>
           {product.Name}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" color="text.secondary" sx={{ marginBottom: '20px' }}>
           {product.Description}
         </Typography>
         <Box mt={2}>
-          <Typography variant="h6" color="primary">
-            מחיר: ₪{product.Price}
+          <Typography variant="h6" color="primary" sx={{ fontWeight: 'bold', color: '#d32f2f' }}>
+            ₪{product.Price}
           </Typography>
-          {isAdmin() && <Typography variant="body2" color="text.secondary">
-            תאריך: {product.Date}
-          </Typography>}
+          {isAdmin() && (
+            <Typography variant="body2" color="text.secondary">
+              תאריך: {product.Date}
+            </Typography>
+          )}
         </Box>
         {isAdmin() && (
           <Box mt={2} display="flex" justifyContent="space-between">
-            <IconButton color="primary" onClick={handleEditClick}>
+            <IconButton 
+              color="primary" 
+              onClick={handleEditClick}
+              sx={{
+                transition: 'transform 0.2s ease',
+                '&:hover': {
+                  transform: 'scale(1.2)', // הגדלת הכפתור בה-hover
+                  color: '#1976d2',
+                },
+              }}
+            >
               <EditIcon />
             </IconButton>
-            <IconButton color="error" onClick={handleDeleteClick}>
+            <IconButton 
+              color="error" 
+              onClick={handleDeleteClick}
+              sx={{
+                transition: 'transform 0.2s ease',
+                '&:hover': {
+                  transform: 'scale(1.2)', // הגדלת הכפתור בה-hover
+                  color: '#d32f2f',
+                },
+              }}
+            >
               <DeleteIcon />
             </IconButton>
           </Box>

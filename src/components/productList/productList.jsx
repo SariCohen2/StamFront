@@ -1,155 +1,130 @@
-import React, { useEffect, useState } from 'react';
-import { Grid, Box, TextField, InputAdornment, Button, Fade, Skeleton } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import AddIcon from '@mui/icons-material/Add';
-import ProductItem from '../productItem/productItem';
-import { deleteProduct, fetchProducts } from '../../services/productService';
+import React, { useState, useEffect } from 'react';
+import { Card, Button, Typography, Input, Row, Col, Skeleton, message, Popconfirm } from 'antd';
+import { EditOutlined, DeleteOutlined, PlusOutlined, SearchOutlined, TagFilled } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import { deleteProduct, fetchProducts } from '../../services/productService';
+
+const { Meta } = Card;
+const { Search } = Input;
+
+const ProductItem = ({ product, onDelete }) => {
+  const navigate = useNavigate();
+  const isAdmin = () => sessionStorage.getItem('role') === 'true';
+
+  const handleDelete = async () => {
+    try {
+      await deleteProduct(product.Id);
+      onDelete(product.Id);
+      message.success('המוצר נמחק בהצלחה');
+    } catch (error) {
+      message.error('שגיאה במחיקת המוצר');
+    }
+  };
+
+  return (
+    <Card
+      hoverable
+      cover={<img alt={product.Name} src={product.Image} style={{ height: '200px', objectFit: 'cover' }} />}
+      actions={[
+        isAdmin() && (
+          <>
+            <EditOutlined onClick={() => navigate(`/edit-product/${product.Id}`)} key="edit" />
+            <Popconfirm
+              title="האם אתה בטוח שברצונך למחוק מוצר זה?"
+              onConfirm={handleDelete}
+              okText="כן"
+              cancelText="לא"
+            >
+              <DeleteOutlined key="delete" />
+            </Popconfirm>
+          </>
+        ),
+      ]}
+    >
+      {product.OnSale && (
+        <TagFilled style={{ color: 'red', position: 'absolute', top: 10, left: 10 }}>במבצע</TagFilled>
+      )}
+      <Meta
+        title={product.Name}
+        description={
+          <>
+            <Typography.Text strong>₪{product.Price}</Typography.Text>
+            <br />
+            <Typography.Text type="secondary">{product.Description}</Typography.Text>
+          </>
+        }
+      />
+    </Card>
+  );
+};
 
 const ProductList = () => {
-    const [products, setProducts] = useState([]);
-    const [filteredProducts, setFilteredProducts] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [loading, setLoading] = useState(true); // Add loading state
-    const navigate = useNavigate();
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        const loadProducts = async () => {
-            try {
-                const data = await fetchProducts(); // לא צריך להעביר false כאן
-                setProducts(data);
-                setFilteredProducts(data);
-            } catch (error) {
-                console.error('Error loading products:', error);
-            } finally {
-                setLoading(false); // Set loading to false after data is fetched
-            }
-        };
-
-        loadProducts();
-    }, []);
-
-    useEffect(() => {
-        if (searchTerm === '') {
-            setFilteredProducts(products);
-        } else {
-            setFilteredProducts(
-                products.filter((product) =>
-                    product.Name.toLowerCase().includes(searchTerm.toLowerCase())
-                )
-            );
-        }
-    }, [searchTerm, products]);
-
-    const isAdmin = () => sessionStorage.getItem('role') === 'true';
-
-    const handleAddProduct = () => {
-        navigate('/add-product');
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        const data = await fetchProducts();
+        setProducts(data);
+        setFilteredProducts(data);
+      } catch (error) {
+        message.error('שגיאה בטעינת המוצרים');
+      } finally {
+        setLoading(false);
+      }
     };
 
-    const handleDelete = async (id) => {
-        try {
-            await deleteProduct(id);
-            // עדכון המערך המקומי
-            setProducts(products.filter(product => product.Id !== id));
-            setFilteredProducts(filteredProducts.filter(product => product.Id !== id));
-        } catch (error) {
-            console.error('Failed to delete product:', error);
-        }
-    };
+    loadProducts();
+  }, []);
 
-    return (
-        <Box sx={{ paddingX: '10vw', width: '100%', boxSizing: 'border-box', backgroundColor: '#f5f5f5' }}>
-            <Box sx={{ marginBottom: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                {isAdmin() && (
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        style={{
-                            backgroundColor: '#3e2723',
-                            borderRadius: '25px',
-                            boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.3)',
-                            paddingX: '20px',
-                            paddingY: '10px',
-                            textTransform: 'none',
-                            fontWeight: 'bold',
-                        }}
-                        startIcon={<AddIcon />}
-                        onClick={handleAddProduct}
-                    >
-                        הוספת מוצר
-                    </Button>
-                )}
-                <TextField
-                    variant="outlined"
-                    placeholder="חפש על פי שם"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <Box
-                                    sx={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        backgroundColor: '#3e2723',
-                                        borderRadius: '50%',
-                                        width: '36px',
-                                        height: '36px',
-                                    }}
-                                >
-                                    <SearchIcon sx={{ color: '#ffffff' }} />
-                                </Box>
-                            </InputAdornment>
-                        ),
-                        sx: {
-                            '& .MuiOutlinedInput-root': {
-                                borderRadius: '20px',
-                                backgroundColor: '#ffffff',
-                                border: '2px solid #3e2723',
-                                transition: 'border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out',
-                                boxShadow: '0px 3px 15px rgba(0, 0, 0, 0.2)',
-                                '&:hover': {
-                                    boxShadow: '0px 3px 15px rgba(0, 0, 0, 0.4)',
-                                    borderColor: '#f50057',
-                                },
-                            },
-                            '& .MuiInputBase-input': {
-                                color: '#000000',
-                                fontWeight: 'bold',
-                                textAlign: 'right',
-                            },
-                        },
-                    }}
-                    sx={{
-                        width: '100%',
-                        maxWidth: 400, // הצרת השדה
-                        marginLeft: 'auto',
-                        backgroundColor: '#ffffff',
-                        marginTop: '20px', // מרחק של 20px מלמעלה
-                    }}
-                />
-            </Box>
-            <Grid container spacing={4} justifyContent="center">
-                {loading ? (
-                    Array.from({ length: 10 }).map((_, index) => (
-                        <Grid item xs={12} sm={6} md={4} key={index}>
-                            <Skeleton variant="rectangular" width="100%" height={200} sx={{ borderRadius: '8px' }} />
-                        </Grid>
-                    ))
-                ) : (
-                    filteredProducts.map((product, index) => (
-                        <Fade in={true} key={product.Id} style={{ transitionDelay: `${index * 100}ms` }}>
-                            <Grid item xs={12} sm={6} md={4}>
-                                <ProductItem product={product} onDelete={handleDelete} />
-                            </Grid>
-                        </Fade>
-                    ))
-                )}
-            </Grid>
-        </Box>
+  const handleSearch = (value) => {
+    setFilteredProducts(
+      products.filter((product) =>
+        product.Name.toLowerCase().includes(value.toLowerCase())
+      )
     );
+  };
+
+  return (
+    <div style={{ padding: '20px' }}>
+      <Row gutter={[16, 16]}>
+        <Col span={24}>
+          <Search
+            placeholder="חפש לפי שם"
+            enterButton={<SearchOutlined />}
+            size="large"
+            onSearch={handleSearch}
+            style={{ maxWidth: '400px', marginBottom: '20px' }}
+          />
+          { isAdmin()&&<Button
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={() => navigate('/add-product')}
+            style={{ marginBottom: '20px', backgroundColor: '#3e2723', borderRadius: '20px' }}
+          >
+            הוספת מוצר
+          </Button>}
+        </Col>
+        {loading ? (
+          Array.from({ length: 10 }).map((_, index) => (
+            <Col xs={24} sm={12} md={8} key={index}>
+              <Skeleton active />
+            </Col>
+          ))
+        ) : (
+          filteredProducts.map((product) => (
+            <Col xs={12} sm={12} md={8} key={product.Id}>
+              <ProductItem product={product} onDelete={(id) => setProducts(products.filter((p) => p.Id !== id))} />
+            </Col>
+          ))
+        )}
+      </Row>
+    </div>
+  );
 };
 
 export default ProductList;
