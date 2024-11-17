@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/StamFront/static/css/main.e48a33ed.css",
+    "main.css": "/StamFront/static/css/main.268d0d6a.css",
     "main.js": "/StamFront/static/js/main.3daf8965.js",
     "static/js/453.6840d1af.chunk.js": "/StamFront/static/js/453.6840d1af.chunk.js",
     "static/media/EFT_Gobus Black.ttf": "/StamFront/static/media/EFT_Gobus Black.87525813c8933a3f40d4.ttf",
@@ -11,12 +11,12 @@
     "static/media/slick.ttf": "/StamFront/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/StamFront/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/StamFront/index.html",
-    "main.e48a33ed.css.map": "/StamFront/static/css/main.e48a33ed.css.map",
+    "main.268d0d6a.css.map": "/StamFront/static/css/main.268d0d6a.css.map",
     "main.3daf8965.js.map": "/StamFront/static/js/main.3daf8965.js.map",
     "453.6840d1af.chunk.js.map": "/StamFront/static/js/453.6840d1af.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e48a33ed.css",
+    "static/css/main.268d0d6a.css",
     "static/js/main.3daf8965.js"
   ]
 }
