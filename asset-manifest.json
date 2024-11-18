@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/StamFront/static/css/main.4af02793.css",
-    "main.js": "/StamFront/static/js/main.3daf8965.js",
+    "main.css": "/StamFront/static/css/main.d53f11c3.css",
+    "main.js": "/StamFront/static/js/main.fd7af07e.js",
     "static/js/453.6840d1af.chunk.js": "/StamFront/static/js/453.6840d1af.chunk.js",
     "static/media/EFT_Gobus Black.ttf": "/StamFront/static/media/EFT_Gobus Black.87525813c8933a3f40d4.ttf",
     "static/media/avatar.jpg": "/StamFront/static/media/avatar.4f7322d72c8beb51a49d.jpg",
@@ -11,12 +11,12 @@
     "static/media/slick.ttf": "/StamFront/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/StamFront/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/StamFront/index.html",
-    "main.4af02793.css.map": "/StamFront/static/css/main.4af02793.css.map",
-    "main.3daf8965.js.map": "/StamFront/static/js/main.3daf8965.js.map",
+    "main.d53f11c3.css.map": "/StamFront/static/css/main.d53f11c3.css.map",
+    "main.fd7af07e.js.map": "/StamFront/static/js/main.fd7af07e.js.map",
     "453.6840d1af.chunk.js.map": "/StamFront/static/js/453.6840d1af.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4af02793.css",
-    "static/js/main.3daf8965.js"
+    "static/css/main.d53f11c3.css",
+    "static/js/main.fd7af07e.js"
   ]
 }
