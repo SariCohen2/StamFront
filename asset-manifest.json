@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/StamFront/static/css/main.5125bfa4.css",
-    "main.js": "/StamFront/static/js/main.7db5a406.js",
+    "main.css": "/StamFront/static/css/main.18258f3d.css",
+    "main.js": "/StamFront/static/js/main.5e41cb01.js",
     "static/js/453.6840d1af.chunk.js": "/StamFront/static/js/453.6840d1af.chunk.js",
     "static/media/has.png": "/StamFront/static/media/has.d419f7b75c1f6d834a0a.png",
     "static/media/STAM.TTF": "/StamFront/static/media/STAM.d4beb190347680448f5e.TTF",
@@ -21,12 +21,12 @@
     "static/media/slick.ttf": "/StamFront/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/StamFront/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/StamFront/index.html",
-    "main.5125bfa4.css.map": "/StamFront/static/css/main.5125bfa4.css.map",
-    "main.7db5a406.js.map": "/StamFront/static/js/main.7db5a406.js.map",
+    "main.18258f3d.css.map": "/StamFront/static/css/main.18258f3d.css.map",
+    "main.5e41cb01.js.map": "/StamFront/static/js/main.5e41cb01.js.map",
     "453.6840d1af.chunk.js.map": "/StamFront/static/js/453.6840d1af.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.5125bfa4.css",
-    "static/js/main.7db5a406.js"
+    "static/css/main.18258f3d.css",
+    "static/js/main.5e41cb01.js"
   ]
 }
